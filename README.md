@@ -13,6 +13,14 @@ The name **Vinna** is derived from the Icelandic verb **“vinna”**, which mea
 
 ---
 
+## 🧪 Version
+
+**Current version: `0.0.0`**
+
+This project is **under active construction**. Core modules are being defined, APIs are evolving, and major components  are being iterated. Expect breaking changes and frequent updates in the early development phase.
+
+---
+
 ## 📦 Modules Overview
 
 The project follows a modular structure with strong separation of concerns:
