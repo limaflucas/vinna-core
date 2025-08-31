@@ -15,6 +15,7 @@ import (
 
 func main() {
 
+	fmt.Println("Welcome!")
 	var kb string
 	fmt.Scanln(&kb)
 	for kb != "q" {

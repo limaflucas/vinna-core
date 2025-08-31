@@ -7,8 +7,9 @@ import (
 
 	"github.com/google/uuid"
 )
-
-var emailPattern = regexp.MustCompile(`^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`)
+var emailPattern = regexp.MustCompile(`^[A-Za-z0-9](?:[A-Za-z0-9_%+\-]*(?:\.[A-Za-z0-9_%+\-]+)*)@(?:[A-Za-z0-9](?:[A-Za-z0-9\-]{0,61}[A-Za-z0-9])?\.)+[A-Za-z]{2,}$`)
+//var emailPattern = regexp.MustCompile(`^[a-zA-Z0-9](?:[a-zA-Z0-9_%+\-]*(?:\.[a-zA-Z0-9_%+\-]+)*)@[a-zA-Z0-9]+\.[a-zA-Z]{2,}$`)
+//var emailPattern = regexp.MustCompile(`^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`)
 
 type User struct {
 	ID        uuid.UUID `json:"id"`
