@@ -1,11 +1,14 @@
 package task
 
 import (
+	"errors"
 	"time"
 
 	"github.com/google/uuid"
 	"vinna.app/vinna-app/internal/frequency"
 )
+
+var ErrEndBeforeStart = errors.New("end date cannot be before start date")
 
 type TaskType string
 
@@ -25,7 +28,10 @@ type BaseTask struct {
 	ModifiedAt time.Time           `json:"modified_at"`
 }
 
-func NewBaseTask(userID uuid.UUID, name string, start time.Time, end time.Time, frequency frequency.Frequency) *BaseTask {
+func NewBaseTask(userID uuid.UUID, name string, start time.Time, end time.Time, frequency frequency.Frequency) (*BaseTask, error) {
+	if end.Before(start) {
+		return nil, ErrEndBeforeStart
+	}
 	return &BaseTask{
 		ID:        uuid.New(),
 		UserID:    userID,
@@ -34,5 +40,5 @@ func NewBaseTask(userID uuid.UUID, name string, start time.Time, end time.Time, 
 		EndDate:   end,
 		Frequency: frequency,
 		CreatedAt: time.Now(),
-	}
+	}, nil
 }
