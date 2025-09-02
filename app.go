@@ -14,30 +14,35 @@ import (
 )
 
 func main() {
+	db_conn := db.GetConnection()
+	var sqlR string
+	err := db_conn.QueryRow(context.Background(), "select 'Hello, world!'").Scan(&sqlR)
+	if err != nil {
+		fmt.Printf("QueryRow failed: %v\n", err)
+		db.Close()
+		os.Exit(1)
+	}
+	fmt.Println(sqlR)
 
-	fmt.Println("Welcome!")
 	var kb string
 	fmt.Scanln(&kb)
 	for kb != "q" {
-		db_conn := db.GetConnection()
-		freq, error := frequency.New("29,59", "*", "*", "*", "*")
-		if error != nil {
-			fmt.Println(error)
+		freq, err := frequency.New("29,59", "*", "*", "*", "*")
+		if err != nil {
+			fmt.Printf("Error: %v/n", err)
 			return
 		}
-		var t1 = task.New(uuid.New(), "a task", time.Now(), time.Now().Add(30), task.Recorded, *freq)
-		var h1 = habit.New(uuid.New(), "a habit", time.Now(), time.Now(), habit.Active, *freq)
+		t1, err := task.New(uuid.New(), "a task", time.Now(), time.Now().Add(30), task.Recorded, *freq)
+		if err != nil {
+			fmt.Printf("Error: %v", err)
+		}
+		h1, err := habit.New(uuid.New(), "a habit", time.Now(), time.Now(), habit.Active, *freq)
+		if err != nil {
+			fmt.Printf("Error: %v", err)
+		}
+
 		fmt.Println(t1)
 		fmt.Println(h1)
-
-		var sqlR string
-		err := db_conn.QueryRow(context.Background(), "select 'Hello, world!'").Scan(&sqlR)
-		if err != nil {
-			fmt.Printf("QueryRow failed: %v\n", err)
-			db.Close()
-			os.Exit(1)
-		}
-		fmt.Println(sqlR)
 		fmt.Scanln(&kb)
 	}
 	db.Close()
